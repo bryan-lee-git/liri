@@ -1,3 +1,12 @@
+// ---------------------------------------------------------------------- 
+// LIRI - Node.js Language Interpretation and Recognition Interface
+// By Bryan Lee - September 2018
+// ---------------------------------------------------------------------- 
+
+// ---------------------------------------------------------------------- 
+// global variables and npm requires 
+// ---------------------------------------------------------------------- 
+
 require("dotenv").config(); // dont env for information security
 var Spotify = require("node-spotify-api"); // spotify API
 var request = require("request"); // request package
@@ -9,7 +18,10 @@ var spotify = new Spotify(keys.spotify); // variable for spotify keys
 var api = process.argv[2]; // variable to receive user arguments and process
 var formattedInput = process.argv.slice(3).join("+");
 
-// function for getting data from spotify API
+// ---------------------------------------------------------------------- 
+// function for getting data from spotify API 
+// ---------------------------------------------------------------------- 
+
 function getSpotify() {
     if (formattedInput === "") var formattedArtist = "The Sign";
     else var formattedArtist = formattedInput
@@ -32,8 +44,13 @@ function getSpotify() {
         });
     });
 };
-// switch cases for different LIRI API functionality
+
+// ---------------------------------------------------------------------- 
+// switch cases for diff API functionality - BandsInTown, OMDB, Spotify
+// ---------------------------------------------------------------------- 
+
 switch(api) {
+
     // bandsintown functionality
     case "concert-this":
         var queryUrl = `https://rest.bandsintown.com/artists/${formattedInput}/events?app_id=codingbootcamp`;
@@ -50,14 +67,16 @@ switch(api) {
             };
         });
     break;
+
     // spotify functionality
     case "spotify-this-song":
         getSpotify();
     break;
+
     // omdb functionality
     case "movie-this":
-        if (process.argv[3] === undefined) var formattedMovie = "Mr. Nobody";
-        else var formattedMovie = process.argv.slice(3).join("+");
+        if (formattedInput === "") var formattedMovie = "Mr. Nobody";
+        else var formattedMovie = formattedInput;
         var queryUrl = `http://www.omdbapi.com/?t=${formattedMovie}&y=&plot=short&apikey=trilogy`;
         request(queryUrl, (error, response, body) => {
             if (!error && response.statusCode === 200) {
@@ -67,6 +86,7 @@ switch(api) {
             };
         });
     break;
+
     // do what it says functionality
     case "do-what-it-says":
         fs.readFile("random.txt", "utf8", (err, data) => {
