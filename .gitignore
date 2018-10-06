@@ -1,3 +1,6 @@
 node_modules/
 .DS_Store
 .env
+show-log.txt
+song-log.txt
+movie-log.txt

@@ -38,7 +38,7 @@ function getSpotify() {
             var albumName = song.album.name;
             shortUrl.short(songPreview, (err, url) => {
                 if (err) throw err;
-                console.log(`Artist: ${artistName}\nSong Name: ${songName}\nAlbum: ${albumName}\n`);
+                console.log(`Artist: ${artistName}\nSong Name: ${songName}\nAlbum: ${albumName}\nListen on Spotify: ${url}\n`);
                 fs.appendFile("song-log.txt", `Artist: ${artistName}\nSong Name: ${songName}\nListen on Spotify: ${url}\nAlbum: ${albumName}\n\n`, (err) => {if (err) throw err;});
             });
         });
